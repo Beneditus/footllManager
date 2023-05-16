@@ -37,7 +37,6 @@ mobileNavbar.init();
 
 
 // formulario
-
 const allButtons = document.querySelectorAll('.addButtons');
 const forms = document.querySelectorAll('.formsPlayers');
 const container = document.querySelector('#formContainer');
@@ -70,115 +69,208 @@ allButtons.forEach(btn =>{
 
 //fim formulario
 
-
-//Adicionar jogadores à tabela
-const tableBody = document.querySelector("#playersTable");
-const inputs = document.querySelector("input");
-
-//Ajax Para cria a tabela de jogadores
-fetch('/jogadores')
-  .then(response => response.json())
-  .then(players => {
-    players.forEach(player => {
-      const row = document.createElement('tr');
-
-      const nameCell = document.createElement('td');
-      nameCell.textContent = player.name;
-      row.appendChild(nameCell);
-
-      const birthdateCell = document.createElement('td');
-      birthdateCell.textContent = player.age;
-      row.appendChild(birthdateCell);
-
-      const countryCell = document.createElement('td');
-      countryCell.textContent = player.country;
-      row.appendChild(countryCell);
-
-      const heightCell = document.createElement('td');
-      heightCell.textContent = player.height + " cm";
-      row.appendChild(heightCell);
-
-      const positionCell = document.createElement('td');
-      positionCell.textContent = player.position;
-      row.appendChild(positionCell);
-
-      tableBody.appendChild(row);
-    });
-  })
-  .catch(error => console.error(error));
-
-
-
-  function verifyRemoveForm() {
-    const form = document.querySelector('#removeForm');
-    const playerIdInput = document.querySelector('#deleteId');
-    const submitButton = document.querySelector('#removeForm input[type="submit"]');
-  
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      const playerId = playerIdInput.value;
-  
-      if (playerId > 0) {
-        // ID válido, enviar o formulário
-        form.submit();
-      } else {
-        // ID inválido, exibir uma mensagem de erro ou realizar outra ação
-        alert('ID inválido');
-      }
-    });
+// Função para criar um ID único para cada jogador
+const criarID = () => {
+  const jogadores = localStorage.getItem('jogadores');
+  if (jogadores) {
+    const jogadoresArray = JSON.parse(jogadores);
+    const maxId = jogadoresArray.reduce((max, jogador) => {
+      return jogador.id > max ? jogador.id : max;
+    }, 0);
+    return maxId + 1;
   }
-  
-  //Chama a função de verificação do formulário de remoção
-  verifyRemoveForm();
-  
-  function verifyAddForm() {
-    const form = document.querySelector('#addForm');
-    const nameInput = document.querySelector('#name');
-    const countryInput = document.querySelector('#country');
+  return 1;
+};
+
+// Função para guardar informações do jogador em localStorage
+const validarIdade = (birthdateInput) => {
+  const today = new Date();
+  const minDate = new Date(today.getFullYear() - 50, today.getMonth(), today.getDate());
+  const maxDate = new Date(today.getFullYear() - 16, today.getMonth(), today.getDate());
+
+  const selectedDate = new Date(birthdateInput.value);
+  if (selectedDate < minDate || selectedDate > maxDate) {
+    birthdateInput.setCustomValidity('A idade do jogador deve estar entre 16 e 50 anos.');
+    alert('Idade inválida. A idade do jogador deve estar entre 16 e 50 anos.');
+    return false;
+  } else {
+    birthdateInput.setCustomValidity('');
+    return true;
+  }
+};
+
+const guardarInformacoes = () => {
+  const form = document.querySelector('#addForm');
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const name = document.querySelector('#name').value;
+    const birthdate = document.querySelector('#birthdate').value;
+    const country = document.querySelector('#country').value;
+    const height = document.querySelector('#height').value;
+    const position = document.querySelector('#position').value;
+
     const birthdateInput = document.querySelector('#birthdate');
-    const heightInput = document.querySelector('#height');
-    const submitButton = document.querySelector('#addForm input[type="submit"]');
-  
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-  
-      //Verifica se o nome contém apenas letras
-      const nameRegex = /^[a-zA-Z\s]+$/;
-      if (!nameRegex.test(nameInput.value)) {
-        alert('O nome deve conter apenas letras');
-        return;
+    const isidadeValida = validarIdade(birthdateInput);
+
+    if (isidadeValida) {
+      const jogador = {
+        id: criarID(),
+        name,
+        birthdate,
+        country,
+        height,
+        position
+      };
+
+      let jogadores = localStorage.getItem('jogadores');
+
+      if (jogadores) {
+        jogadores = JSON.parse(jogadores);
+      } else {
+        jogadores = [];
       }
-  
-      //Verifica se o país contém apenas letras
-      if (!nameRegex.test(countryInput.value)) {
-        alert('O país deve conter apenas letras');
-        return;
+
+      jogadores.push(jogador);
+
+      localStorage.setItem('jogadores', JSON.stringify(jogadores));
+
+      mostrarDados();
+      alert('Jogador adicionado com sucesso!');
+    }
+  });
+};
+
+
+// Função para editar os dados de um jogador pelo ID
+const editarJogador = () => {
+  const editForm = document.querySelector('#editForm');
+
+  editForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const editId = document.querySelector('#editId').value;
+    const editName = document.querySelector('#editName').value;
+    const editBirthdate = document.querySelector('#editBirthdate').value;
+    const editCountry = document.querySelector('#editCountry').value;
+    const editHeight = document.querySelector('#editHeight').value;
+    const editPosition = document.querySelector('#editPosition').value;
+
+    const birthdateInput = document.querySelector('#editBirthdate');
+    const isidadeValida = validarIdade(birthdateInput);
+
+    if (isidadeValida) {
+      let jogadores = localStorage.getItem('jogadores');
+
+      if (jogadores) {
+        jogadores = JSON.parse(jogadores);
+
+        const index = jogadores.findIndex((jogador) => jogador.id.toString() === editId);
+
+        if (index !== -1) {
+          jogadores[index].name = editName;
+          jogadores[index].birthdate = editBirthdate;
+          jogadores[index].country = editCountry;
+          jogadores[index].height = editHeight;
+          jogadores[index].position = editPosition;
+
+          localStorage.setItem('jogadores', JSON.stringify(jogadores));
+
+          mostrarDados();
+          alert('Jogador atualizado com sucesso!');
+        }
       }
-  
-      //o ano de nascimento do jogador
-      const birthdateYear = new Date(birthdateInput.value).getFullYear();
-  
-      // Verificar se o ano de nascimento é inferior a 1960
-      if (birthdateYear < 1960) {
-        alert('O jogador deve ter nascido após 1960');
-        return;
-        // 
-      }
-  
-      //altura do jogador
-      const height = parseInt(heightInput.value);
-  
-      //Verifica se a altura está dentro da faixa válida (150-210)
-      if (height < 150 || height > 210) {
-        alert('A altura do jogador deve estar entre 150 e 210');
-        return;
-      }
-  
-      // O nome, país, ano de nascimento e altura estão válidos, enviar o formulário
-      form.submit();
+    }
+  });
+};
+
+
+
+
+// Função para mostrar os dados dos jogadores na tabela
+const mostrarDados = () => {
+  const jogadoresTable = document.querySelector('#playersTable');
+  jogadoresTable.innerHTML = '';
+
+  let jogadores = localStorage.getItem('jogadores');
+
+  if (jogadores) {
+    jogadores = JSON.parse(jogadores);
+
+    jogadores.forEach((jogador) => {
+      const { id, name, birthdate, country, height, position } = jogador;
+
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${id}</td>
+        <td>${name}</td>
+        <td>${calcularIdade(birthdate)}</td>
+        <td>${country}</td>
+        <td>${height}</td>
+        <td>${position}</td>
+      `;
+
+      jogadoresTable.appendChild(row);
     });
   }
+};
+
+// Função para calcular a idade com base na data de nascimento
+const calcularIdade = (birthdate) => {
+  const hoje = new Date();
+  const dataNascimento = new Date(birthdate);
+  let idade = hoje.getFullYear() - dataNascimento.getFullYear();
+  const mesAtual = hoje.getMonth();
+  const diaAtual = hoje.getDate();
+  const mesNascimento = dataNascimento.getMonth();
+  const diaNascimento = dataNascimento.getDate();
+
+  if (mesAtual < mesNascimento || (mesAtual === mesNascimento && diaAtual < diaNascimento)) {
+    idade--;
+  }
+
+  return idade;
+};
+
+// Função para remover um jogador pelo ID
+const apagarJogador = () => {
+  const removeForm = document.querySelector('#removeForm');
+
+  removeForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const deleteId = document.querySelector('#deleteId').value;
+
+    let jogadores = localStorage.getItem('jogadores');
+
+    if (jogadores) {
+      jogadores = JSON.parse(jogadores);
+
+      const index = jogadores.findIndex((jogador) => jogador.id.toString() === deleteId);
+
+      if (index !== -1) {
+        jogadores.splice(index, 1);
+        localStorage.setItem('jogadores', JSON.stringify(jogadores));
+        mostrarDados();
+        alert('Jogador removido com sucesso!');
+      } else {
+        alert('Jogador não encontrado!');
+      }
+    } else {
+      alert('Jogador não encontrado!');
+    }
+  });
+};
+
+
+//ativar funções
+const ativarFuncoes = () => {
+  guardarInformacoes();
+  mostrarDados();
+  editarJogador();
+  apagarJogador();
   
-  // Chamar a função para configurar o formulário de adição
-  verifyAddForm();
-  
+};
+
+ativarFuncoes();

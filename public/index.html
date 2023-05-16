@@ -34,7 +34,7 @@
     
 
     <div id="formContainer">
-      <form id="addForm" method="post" action="/adicionarJogador" class="formsPlayers">
+      <form id="addForm" method="get" class="formsPlayers">
          
           <label for="name">Nome:</label>
           <input type="text" id="name" name="name" required placeholder="nome próprio e apelido">
@@ -43,10 +43,22 @@
           <input type="date" id="birthdate" name="birthdate" required>
 
           <label for="country">País:</label>
-          <input type="text" id="country" name="country" required placeholder="país do jogador">
+          <select id="country" name="country" required>
+            <option value="" selected disabled hidden>Select an option</option>
+            <option value="Portugal">Portugal</option>
+            <option value="Espanha">Espanha</option>
+            <option value="França">França</option>
+            <option value="Bélgica">Bélgica</option>
+            <option value="Itália">Itália</option>
+            <option value="Alemanha">Alemanha</option>
+            <option value="Argetina">Argetina</option>
+            <option value="Brasil">Brasil</option>
+            <option value="Holanda">Holanda</option>
+            <option value="Inglaterra">Inglaterra</option>
+          </select>      
 
           <label for="height">Altura:</label>
-          <input type="number" id="height" name="height" required placeholder="altura do jogador">
+          <input type="number" id="height" name="height" required placeholder="altura do jogador" min="150" max="220">
 
           <label for="position">Posição:</label>
           <select id="position" name="position" required>
@@ -60,7 +72,7 @@
         </form>
 
 
-        <form id="editForm" method="post" action="/editarJogador" class="formsPlayers">
+        <form id="editForm" method="get" class="formsPlayers">
  
           
           <label for="editId">ID:</label>
@@ -73,25 +85,37 @@
           <input type="date" id="editBirthdate" name="birthdate" required>
           
           <label for="editCountry">País:</label>
-          <input type="text" id="editCountry" name="country" required placeholder="país do jogador">
+          <select id="editCountry" name="editCountry" required>
+            <option value="" selected disabled hidden>Select an option</option>
+            <option value="Portugal">Portugal</option>
+            <option value="Espanha">Espanha</option>
+            <option value="França">França</option>
+            <option value="Bélgica">Bélgica</option>
+            <option value="Itália">Itália</option>
+            <option value="Alemanha">Alemanha</option>
+            <option value="Argetina">Argetina</option>
+            <option value="Brasil">Brasil</option>
+            <option value="Holanda">Holanda</option>
+            <option value="Inglaterra">Inglaterra</option>
+          </select>    
           
           <label for="editHeight">Altura:</label>
-          <input type="number" id="editHeight" name="height" required placeholder="altura do jogador">
+          <input type="number" id="editHeight" name="height" required placeholder="altura do jogador" min="150" max="220">
           
           <label for="editPosition">Posição:</label>
           <select id="editPosition" name="position" required>
             <option value="" selected disabled hidden>Selecionar opção</option>
-            <option value="1">Guarda-Redes</option>
-            <option value="2">Defesa</option>
-            <option value="3">Médio</option>
-            <option value="4">Avançado</option>
+            <option value="GR">Guarda-Redes</option>
+            <option value="DF">Defesa</option>
+            <option value="MC">Médio</option>
+            <option value="AV">Avançado</option>
           </select>
           
           <input type="submit" value="Editar Jogador(a)!">
         </form>
 
 
-        <form id="removeForm" method="post" action="/apagarJogador" class="formsPlayers">
+        <form id="removeForm" method="get" class="formsPlayers">
           <label for="deleteId">ID do jogador:</label>
           <input type="number" id="deleteId" name="id">
           <input type="submit" value="Excluir">
@@ -104,6 +128,7 @@
     <table id="dataTable">
       <thead>
          <tr>
+           <th>ID</th>
            <th>Nome</th>
            <th>Idade</th>
            <th>País</th>
