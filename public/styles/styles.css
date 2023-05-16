@@ -1,0 +1,258 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Josefin Sans', sans-serif;
+  }
+
+  body{
+    background-color: #DDDDDD;
+  }
+  
+
+  /* navigationBar Responsiva*/
+  .options, .logo{
+    color: #fff;
+    text-decoration: none;
+    transition: 0.3s;
+    width: 6vh;
+  }
+  
+  .options:hover {
+    color: #ecd79b;
+  }
+  
+  nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: #658864;
+    height: 8vh;
+  }
+  
+  .navList {
+    list-style: none;
+    display: flex;
+  }
+  
+  .navList li {
+    letter-spacing: 3px;
+    margin-left: 32px;
+  }
+  
+  .mobileMenu {
+    display: none;
+    cursor: pointer;
+  }
+  
+  .mobileMenu div {
+    width: 32px;
+    height: 2px;
+    background: #fff;
+    margin: 8px;
+    transition: 0.3s;
+  }
+
+  
+  .navList.active {
+    transform: translateX(0);
+  }
+  
+  @keyframes navLinkFade {
+    from {
+      opacity: 0;
+      transform: translateX(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  .mobileMenu.active .line1 {
+    transform: rotate(-45deg) translate(-8px, 8px);
+  }
+  
+  .mobileMenu.active .line2 {
+    opacity: 0;
+  }
+  
+  .mobileMenu.active .line3 {
+    transform: rotate(45deg) translate(-5px, -7px);
+  }
+
+/* Fim navigationBar Responsiva*/
+
+
+/* botões forms*/
+#containerButtons {
+  margin: 2vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.addButtons{
+  background-color: #536e52;
+  color: #ecd79b;
+  padding: 2vh;
+  border: none;
+  border-radius: 1vh;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+
+/* Formulários */
+#formContainer{
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+    width: 60vh;
+    margin-right: auto;
+    margin-left: auto;
+    background-color: #658864;
+    border-radius: 5vh;
+    border: 1vh solid #7faa7d;
+}
+
+.formsPlayers{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    padding: 6vh; 
+}
+
+.formsPlayers:first-child{
+    margin-top: 2vh
+}
+
+.formsPlayers label {
+    display: block;
+    margin-bottom: 1vh;
+    font-size: 2vh;
+    font-weight: bold;
+    text-align: left;
+    color: #413f3d;
+  }
+  
+  .formsPlayers input[type="text"],.formsPlayers input[type="date"], .formsPlayers select, .formsPlayers input[type="number"] {
+    padding: 20px;
+    width: 20vw;
+    margin-bottom: 2vh;
+    border: 1px solid #ccc;
+    border-radius: 1vh;
+    font-size: 16px;
+  }
+  
+  .formsPlayers input[type="submit"] {
+    background-color: #d1d1d1;
+    color: #292524;
+    padding: 2vh;
+    border: none;
+    border-radius: 1vh;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .formsPlayers input[type="submit"]:hover {
+    background-color: #c3c2c2;
+  }
+
+/* Fim do Formulário */
+
+/* Deixa o formulario não visivel ao carregar a pagina*/
+#formContainer{
+    display: none;
+  }
+
+
+/* tabela */
+.tableContainer {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+
+#dataTable {
+  width: 80%;
+  border: 2px solid black;
+}
+
+th, td {
+  padding: 0.5rem;
+  text-align: center;
+  border: 2px solid black;
+  background-color: #7faa7d;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+/* Media Query */
+@media (max-width: 600px) {
+  body {
+    overflow-x: hidden;
+  }
+  .navList {
+    position: absolute;
+    top: 8vh;
+    right: 0;
+    width: 50vw;
+    height: 92vh;
+    background: #536e52;
+    flex-direction: column;
+    align-items: center;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in;
+  }
+  .navList li {
+    margin-left: 0;
+    opacity: 0;
+    margin-bottom: 10vh;
+  }
+
+  .navList li:first-child {
+      margin-left: 0;
+      opacity: 0;
+      margin-bottom: 10vh;
+      margin-top: 5vh;
+    }
+
+  .mobileMenu {
+    display: block;
+  }
+
+
+  #formContainer{
+      width: 48vh;
+      margin-right: auto;
+      margin-left: auto;
+  }
+
+  th, td {
+    font-size: 2vh;
+  }
+
+  
+.formsPlayers:first-child{
+  margin-top: 1vh
+}
+
+.formsPlayers input[type="text"],.formsPlayers input[type="date"], .formsPlayers select, .formsPlayers input[type="number"] {
+  width: 30vh;
+}
+
+#containerButtons {
+  flex-direction: column;   
+  padding: 2vh;
+  
+}
+
+.addButtons{
+  margin-bottom: 2vh;
+}
+
+}
