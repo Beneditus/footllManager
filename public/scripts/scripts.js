@@ -69,6 +69,32 @@ allButtons.forEach(btn =>{
 
 //fim formulario
 
+//Mostra as sections
+const toggleSections = () => {
+  const sectionTeams = document.querySelector('#sectionTeams');
+  const sectionPlayers = document.querySelector('#sectionPlayers');
+  const linkJogadores = document.querySelector('.navList li:first-child a');
+  const linkEquipas = document.querySelector('.navList li:nth-child(2) a');
+
+  linkJogadores.addEventListener('click', () => {
+    sectionTeams.style.display = 'none';
+    sectionPlayers.style.display = 'flex';
+    sectionPlayers.style.flexDirection = 'column';
+  });
+
+  linkEquipas.addEventListener('click', () => {
+    sectionPlayers.style.display = 'none';
+    sectionTeams.style.display = 'flex';
+    sectionTeams.style.flexDirection = 'column';
+  });
+};
+
+toggleSections();
+
+
+
+//Funções para os Jogadores
+
 // Função para criar um ID único para cada jogador
 const criarID = () => {
   const jogadores = localStorage.getItem('jogadores');
@@ -185,9 +211,6 @@ const editarJogador = () => {
   });
 };
 
-
-
-
 // Função para mostrar os dados dos jogadores na tabela
 const mostrarDados = () => {
   const jogadoresTable = document.querySelector('#playersTable');
@@ -274,3 +297,14 @@ const ativarFuncoes = () => {
 };
 
 ativarFuncoes();
+
+
+//Fim Jogadores
+
+
+//Scripts Equipas
+
+//Mostrar formulários
+
+
+//Fim Equipas

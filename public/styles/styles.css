@@ -86,7 +86,7 @@
 
 
 /* botões forms*/
-#containerButtons {
+.containerButtons {
   margin: 2vh;
   display: flex;
   align-items: center;
@@ -191,6 +191,12 @@ th {
   background-color: #f2f2f2;
 }
 
+/* desativar sections ao entrar na página*/
+#sectionPlayers, #sectionTeams{
+  display: none;
+}
+
+
 /* Media Query */
 @media (max-width: 600px) {
   body {
@@ -245,7 +251,7 @@ th {
   width: 30vh;
 }
 
-#containerButtons {
+.containerButtons {
   flex-direction: column;   
   padding: 2vh;
   
