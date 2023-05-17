@@ -70,6 +70,7 @@
             <option value="MC">Médio</option>
             <option value="AV">Avançado</option>
           </select>      
+
           <input type="submit" value="Adicionar Jogador(a)!"> 
         </form>
 
@@ -179,7 +180,9 @@
           <label for="descricao">Descrição:</label>
           <input type="text" id="descricao" name="descricao" required placeholder="Acrónimo">
 
-          <!-- ADICIONAR OS JOGADORES -->
+          <label for="playerIds">IDs dos jogadores a serem adicionados:</label>
+          <input type="text" id="playerIds" name="playerIds" required placeholder="IDs dos jogadores (separar por vírgula)">
+
           <input type="submit" value="Adicionar Equipa!"> 
         </form>
 
@@ -190,7 +193,7 @@
                 <input type="text" id="editId" name="id">         
       
                 <label for="editName">Nome:</label>
-                <input type="text" id="editName" name="editName" required placeholder="nome próprio e apelido">
+                <input type="text" id="editName" name="editName" required placeholder="nome da equipa">
       
                 <label for="editAcronimo">Acrónimo:</label>
                 <input type="text" id="editAcronimo" name="editAcronimo" required placeholder="Acrónimo" pattern="[A-Za-z]{3}">
@@ -211,9 +214,8 @@
                 </select>      
                 
                 <label for="editDescricao">Descrição:</label>
-                <input type="text" id="editDescricao" name="editDescricao" required placeholder="Acrónimo">
+                <input type="text" id="editDescricao" name="editDescricao" required placeholder="descrição">
       
-                <!-- ADICIONAR OS JOGADORES -->
                 <input type="submit" value="Editar Equipa!"> 
          </form>
       
@@ -227,7 +229,7 @@
 
     <div class="tableContainer">
     
-      <table id="dataTable">
+      <table id="teamsTable">
         <thead>
            <tr>
              <th>ID</th>
@@ -239,7 +241,7 @@
          </thead>
          <tbody id="teamTable"></tbody>
         </table>
-      </div>
+    </div>
 
     </section>
 

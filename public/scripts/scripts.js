@@ -338,4 +338,10 @@ allButtonsTeams.forEach(btn =>{
 
 //fim formulario
 
+//Adicionar Equipa
+
+
+//Mostra as Equipas na tabela
+
+
 //Fim Equipas
