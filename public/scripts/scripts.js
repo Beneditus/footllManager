@@ -37,34 +37,34 @@ mobileNavbar.init();
 
 
 // formulario
-const allButtons = document.querySelectorAll('.addButtons');
-const forms = document.querySelectorAll('.formsPlayers');
-const container = document.querySelector('#formContainer');
+const allButtonsPlayers = document.querySelectorAll('.buttonPlayer');
+const formsPlayers = document.querySelectorAll('.formsPlayers');
+const containerPlayers = document.querySelector('#formContainerPlayers');
 
-const openForm = (selectedButton) =>{
-  container.style.display = "flex";
+const openFormPlayers = (selectedButton) =>{
+  containerPlayers.style.display = "flex";
   let selectedForm = document.querySelector(`#${selectedButton.id.replace("Player", "")}Form`);
-  forms.forEach(form =>{
+  formsPlayers.forEach(form =>{
     form.style.display = "none";
   });
-  allButtons.forEach(button =>{
+  allButtonsPlayers.forEach(button =>{
     button.style.display = "none";
   });
   selectedButton.style.display = "block";
   selectedForm.style.display = "flex";
-  selectedButton.addEventListener("click", () => closeForm(selectedButton));
+  selectedButton.addEventListener("click", () => closeFormPlayers(selectedButton));
 }
 
-const closeForm = (selectedButton) =>{
-  container.style.display = "none";
-  allButtons.forEach(button =>{
+const closeFormPlayers = (selectedButton) =>{
+  containerPlayers.style.display = "none";
+  allButtonsPlayers.forEach(button =>{
     button.style.display = "block";
   });
-  selectedButton.addEventListener("click", () => openForm(selectedButton));
+  selectedButton.addEventListener("click", () => openFormPlayers(selectedButton));
 }
 
-allButtons.forEach(btn =>{
-  btn.addEventListener("click", () => openForm(btn))
+allButtonsPlayers.forEach(btn =>{
+  btn.addEventListener("click", () => openFormPlayers(btn))
 }); 
 
 //fim formulario
@@ -304,7 +304,38 @@ ativarFuncoes();
 
 //Scripts Equipas
 
-//Mostrar formulários
+// formulario
+const allButtonsTeams = document.querySelectorAll('.buttonTeams');
+const formsTeams = document.querySelectorAll('.formsTeams');
+const containerTeams = document.querySelector('#formContainerTeams');
 
+const openFormTeams = (selectedButton) =>{
+  containerTeams.style.display = "flex";
+  let selectedForm = document.querySelector(`#${selectedButton.id.replace("Team", "")}TeamForm`);
+  console.log(selectedForm)
+  formsTeams.forEach(form =>{
+    form.style.display = "none";
+  });
+  allButtonsTeams.forEach(button =>{
+    button.style.display = "none";
+  });
+  selectedButton.style.display = "block";
+  selectedForm.style.display = "flex";
+  selectedButton.addEventListener("click", () => closeFormTeams(selectedButton));
+}
+
+const closeFormTeams = (selectedButton) =>{
+  containerTeams.style.display = "none";
+  allButtonsTeams.forEach(button =>{
+    button.style.display = "block";
+  });
+  selectedButton.addEventListener("click", () => openFormTeams(selectedButton));
+}
+
+allButtonsTeams.forEach(btn =>{
+  btn.addEventListener("click", () => openFormTeams(btn))
+}); 
+
+//fim formulario
 
 //Fim Equipas

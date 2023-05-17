@@ -28,15 +28,15 @@
   
     <section id="sectionPlayers">
 
-    <div class="containerButtons">
-      <button class="addButtons" id="addPlayer">Adicionar Jogador</button>
-      <button class="addButtons" id="editPlayer">Editar Jogador</button>
-      <button class="addButtons" id="removePlayer">Remover Jogador</button>
+    <div class="containerButtons" id="containerButtonsPlayers">
+      <button class="addButtons buttonPlayer" id="addPlayer">Adicionar Jogador</button>
+      <button class="addButtons buttonPlayer" id="editPlayer">Editar Jogador</button>
+      <button class="addButtons buttonPlayer" id="removePlayer">Remover Jogador</button>
     </div>
     
 
-    <div id="formContainer">
-      <form id="addForm" method="get" class="formsPlayers">
+    <div id="formContainerPlayers" class="formContainer">
+      <form id="addForm" method="get" class="formsPlayers form">
          
           <label for="name">Nome:</label>
           <input type="text" id="name" name="name" required placeholder="nome próprio e apelido">
@@ -74,7 +74,7 @@
         </form>
 
 
-        <form id="editForm" method="get" class="formsPlayers">
+        <form id="editForm" method="get" class="formsPlayers form">
  
           
           <label for="editId">ID:</label>
@@ -117,7 +117,7 @@
         </form>
 
 
-        <form id="removeForm" method="get" class="formsPlayers">
+        <form id="removeForm" method="get" class="formsPlayers form">
           <label for="deleteId">ID do jogador:</label>
           <input type="number" id="deleteId" name="id">
           <input type="submit" value="Excluir">
@@ -145,14 +145,15 @@
 
     <!-- EQUIPAS -->
     <section id="sectionTeams">
-    <div class="containerButtons">
-      <button class="addButtons" id="addTeam">Adicionar Equipa</button>
-      <button class="addButtons" id="editTeam">Editar Equipa</button>
-      <button class="addButtons" id="removeTeam">Remover Equipa</button>
+      
+    <div class="containerButtons" id="containerButtonsTeams">
+      <button class="addButtons buttonTeams" id="addTeam">Adicionar Equipa</button>
+      <button class="addButtons buttonTeams" id="editTeam">Editar Equipa</button>
+      <button class="addButtons buttonTeams" id="removeTeam">Remover Equipa</button>
     </div>
 
-    <div id="formContainer">
-      <form id="addTeam" method="get" class="formsTeams">
+    <div id="formContainerTeams" class="formContainer">
+      <form id="addTeamForm" method="get" class="formsTeams form">
          
           <label for="name">Nome:</label>
           <input type="text" id="name" name="name" required placeholder="nome próprio e apelido">
@@ -183,7 +184,7 @@
         </form>
 
 
-        <form id="editTeam" method="get" class="formsTeams">
+        <form id="editTeamForm" method="get" class="formsTeams form">
 	
           <label for="editId">ID:</label>
                 <input type="text" id="editId" name="id">         
@@ -217,7 +218,7 @@
          </form>
       
 
-       <form id="removeTeam" method="get" class="formsTeams">
+       <form id="removeTeamForm" method="get" class="formsTeams form">
           <label for="deleteId">ID da Equipa:</label>
           <input type="number" id="deleteId" name="id">
           <input type="submit" value="Excluir">

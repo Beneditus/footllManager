@@ -105,7 +105,7 @@
 
 
 /* Formulários */
-#formContainer{
+.formContainer{
     margin-top: 5vh;
     margin-bottom: 5vh;
     width: 60vh;
@@ -116,18 +116,18 @@
     border: 1vh solid #7faa7d;
 }
 
-.formsPlayers{
+.form{
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
     padding: 6vh; 
 }
 
-.formsPlayers:first-child{
+.form:first-child{
     margin-top: 2vh
 }
 
-.formsPlayers label {
+.form label{
     display: block;
     margin-bottom: 1vh;
     font-size: 2vh;
@@ -136,7 +136,7 @@
     color: #413f3d;
   }
   
-  .formsPlayers input[type="text"],.formsPlayers input[type="date"], .formsPlayers select, .formsPlayers input[type="number"] {
+  .form input[type="text"],.form input[type="date"], .form select, .form input[type="number"] {
     padding: 20px;
     width: 20vw;
     margin-bottom: 2vh;
@@ -145,7 +145,7 @@
     font-size: 16px;
   }
   
-  .formsPlayers input[type="submit"] {
+  .form input[type="submit"] {
     background-color: #d1d1d1;
     color: #292524;
     padding: 2vh;
@@ -155,7 +155,7 @@
     font-size: 16px;
   }
   
-  .formsPlayers input[type="submit"]:hover {
+  .form input[type="submit"]:hover {
     background-color: #c3c2c2;
   }
 
@@ -243,11 +243,11 @@ th {
   }
 
   
-.formsPlayers:first-child{
+.form:first-child{
   margin-top: 1vh
 }
 
-.formsPlayers input[type="text"],.formsPlayers input[type="date"], .formsPlayers select, .formsPlayers input[type="number"] {
+.form input[type="text"],.form input[type="date"], .form select, .form input[type="number"] {
   width: 30vh;
 }
 
