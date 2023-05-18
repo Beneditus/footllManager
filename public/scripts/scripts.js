@@ -73,19 +73,27 @@ allButtonsPlayers.forEach(btn =>{
 const toggleSections = () => {
   const sectionTeams = document.querySelector('#sectionTeams');
   const sectionPlayers = document.querySelector('#sectionPlayers');
+  const sectionCampeonatos = document.querySelector("#sectionCampeonatos")
   const linkJogadores = document.querySelector('.navList li:first-child a');
   const linkEquipas = document.querySelector('.navList li:nth-child(2) a');
+  const linkCampeonatos = document.querySelector('.navList li:nth-child(3) a');
 
   linkJogadores.addEventListener('click', () => {
     sectionTeams.style.display = 'none';
+    sectionCampeonatos.style.display = 'none';
     sectionPlayers.style.display = 'flex';
-    sectionPlayers.style.flexDirection = 'column';
   });
 
   linkEquipas.addEventListener('click', () => {
     sectionPlayers.style.display = 'none';
+    sectionCampeonatos.style.display = 'none';
     sectionTeams.style.display = 'flex';
-    sectionTeams.style.flexDirection = 'column';
+  });
+
+  linkCampeonatos.addEventListener('click', () => {
+    sectionPlayers.style.display = 'none';
+    sectionTeams.style.display = 'none';
+    sectionCampeonatos.style.display = 'flex';
   });
 };
 
@@ -293,7 +301,6 @@ const ativarFuncoes = () => {
   mostrarDados();
   editarJogador();
   apagarJogador();
-  
 };
 
 ativarFuncoes();
@@ -339,3 +346,74 @@ allButtonsTeams.forEach(btn =>{
 //fim formulario
 
 //Fim Equipas
+
+//Scripts Campeonatos
+const allButtonsCampeonatos = document.querySelectorAll('.buttonCampeonato');
+const formsCampeonatos = document.querySelectorAll('.formsCampeonato');
+const containerCampeonatos = document.querySelector('#formContainerCampeonatos');
+
+const openFormCampeonatos = (selectedButton) =>{
+  containerCampeonatos.style.display = "flex";
+  let selectedForm = document.querySelector(`#${selectedButton.id.replace("Campeonato", "")}FormCampeonato`);
+  formsCampeonatos.forEach(form =>{
+    form.style.display = "none";
+  });
+  allButtonsCampeonatos.forEach(button =>{
+    button.style.display = "none";
+  });
+  selectedButton.style.display = "block";
+  selectedForm.style.display = "flex";
+  selectedButton.addEventListener("click", () => closeFormCampeonatos(selectedButton));
+}
+
+const closeFormCampeonatos = (selectedButton) =>{
+  containerCampeonatos.style.display = "none";
+  allButtonsCampeonatos.forEach(button =>{
+    button.style.display = "block";
+  });
+  selectedButton.addEventListener("click", () => openFormCampeonatos(selectedButton));
+}
+
+allButtonsCampeonatos.forEach(btn =>{
+  btn.addEventListener("click", () => openFormCampeonatos(btn))
+});
+
+const guardarInformacoesCampeonato = () => {
+  const form = document.querySelector('#addFormCampeonato');
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const name = document.querySelector('#name').value;
+    const birthdate = document.querySelector('#birthdate').value;
+
+    const birthdateInput = document.querySelector('#birthdate');
+    const isidadeValida = validarIdade(birthdateInput);
+
+    if (isidadeValida) {
+      const jogador = {
+        id: criarID(),
+        name,
+        birthdate,
+        country,
+        height,
+        position
+      };
+
+      let jogadores = localStorage.getItem('jogadores');
+
+      if (jogadores) {
+        jogadores = JSON.parse(jogadores);
+      } else {
+        jogadores = [];
+      }
+
+      jogadores.push(jogador);
+
+      localStorage.setItem('jogadores', JSON.stringify(jogadores));
+
+      mostrarDados();
+      alert('Jogador adicionado com sucesso!');
+    }
+  });
+};

@@ -36,7 +36,7 @@
     
 
     <div id="formContainerPlayers" class="formContainer">
-      <form id="addForm" method="get" class="formsPlayers form">
+      <form id="addFormCampeonato" method="get" class="formsPlayers form">
          
           <label for="name">Nome:</label>
           <input type="text" id="name" name="name" required placeholder="nome próprio e apelido">
@@ -243,7 +243,71 @@
 
     </section>
 
+    <section id="sectionCampeonatos">
+      <div class="leftSection">
+        <select name="" id="" class="paisFiltro">
+            <option value="Portugal">Portugal</option>
+            <option value="Espanha">Espanha</option>
+            <option value="França">França</option>
+            <option value="Bélgica">Bélgica</option>
+            <option value="Itália">Itália</option>
+            <option value="Alemanha">Alemanha</option>
+            <option value="Argetina">Argetina</option>
+            <option value="Brasil">Brasil</option>
+            <option value="Holanda">Holanda</option>
+            <option value="Inglaterra">Inglaterra</option>
+        </select>
+        
+      <table id="dataTableCampeonatosEquipas">
+          <thead>
+         <tr>
+           <th>País</th>
+           <th>Equipa</th>
+         </tr>
+       </thead>
+       <tbody id="campeonatosEquipasTable"></tbody>
+      </table>
+      </div>
 
+      <div class="rightSection">
+        <div class="buttonContainer"> 
+          <button class="buttonCampeonato" id="addCampeonato"> Add Campeonato</button>
+          <button class="buttonCampeonato" id="verCampeonato"> Ver Campeonato </button>
+        </div>
+
+      <div id="formContainerCampeonatos" class="formContainer">
+      <form id="addFormCampeonato" method="get" class="formsCampeonato form">
+          <label for="name">Nome:</label>
+          <input type="text" id="name" name="name" required placeholder="nome do campeonato">
+
+          <label for="birthdate">Edição:</label>
+          <input type="number" id="edition" name="edition" required>
+   
+          <input type="submit" value="Adicionar Campeonato(a)!"> 
+      </form>
+      <form id="verFormCampeonato" method="get" class="formsCampeonato form">
+          <label for="name">ID:</label>
+          <input type="text" id="name" name="name" required placeholder="ID do campeonato">
+
+          <label for="birthdate">Edição:</label>
+          <input type="number" id="edition" name="edition" required>
+   
+          <input type="submit" value="Ver Campeonato(a)!"> 
+      </form>
+      </div>
+      <table id="dataTableCampeonatos">
+      <thead>
+         <tr>
+           <th style="width: 30%;">Nome</th>
+           <th style="width: 18%;">Edição</th>
+           <th style="width: 30%;">Vencedor</th>
+           <th style="width: 22%;">Estado</th>
+         </tr>
+       </thead>
+       <tbody id="campeonatosTable"></tbody>
+      </table>
+      </div>
+    </section>
     <script src="scripts/scripts.js"></script>
 </body>
 </html>
