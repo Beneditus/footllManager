@@ -102,7 +102,6 @@ toggleSections();
 
 
 //Funções para os Jogadores
-
 // Função para criar um ID único para cada jogador
 const criarID = () => {
   const jogadores = localStorage.getItem('jogadores');
@@ -115,7 +114,6 @@ const criarID = () => {
   }
   return 1;
 };
-
 // Função para guardar informações do jogador em localStorage
 const validarIdade = (birthdateInput) => {
   const today = new Date();
@@ -139,13 +137,13 @@ const guardarInformacoes = () => {
   form.addEventListener('submit', (event) => {
     event.preventDefault();
 
-    const name = document.querySelector('#name').value;
-    const birthdate = document.querySelector('#birthdate').value;
-    const country = document.querySelector('#country').value;
-    const height = document.querySelector('#height').value;
-    const position = document.querySelector('#position').value;
+    const name = document.querySelector('#playerName').value;
+    const birthdate = document.querySelector('#playerBirthdate').value;
+    const country = document.querySelector('#playerCountry').value;
+    const height = document.querySelector('#playerHeight').value;
+    const position = document.querySelector('#playerPosition').value;
 
-    const birthdateInput = document.querySelector('#birthdate');
+    const birthdateInput = document.querySelector('#playerBirthdate');
     const isidadeValida = validarIdade(birthdateInput);
 
     if (isidadeValida) {
@@ -184,14 +182,14 @@ const editarJogador = () => {
   editForm.addEventListener('submit', (event) => {
     event.preventDefault();
 
-    const editId = document.querySelector('#editId').value;
-    const editName = document.querySelector('#editName').value;
-    const editBirthdate = document.querySelector('#editBirthdate').value;
-    const editCountry = document.querySelector('#editCountry').value;
-    const editHeight = document.querySelector('#editHeight').value;
-    const editPosition = document.querySelector('#editPosition').value;
+    const editId = document.querySelector('#editPlayerId').value;
+    const editName = document.querySelector('#editPlayerName').value;
+    const editBirthdate = document.querySelector('#editPlayerBirthdate').value;
+    const editCountry = document.querySelector('#editPlayerCountry').value;
+    const editHeight = document.querySelector('#editPlayerHeight').value;
+    const editPosition = document.querySelector('#editPlayerPosition').value;
 
-    const birthdateInput = document.querySelector('#editBirthdate');
+    const birthdateInput = document.querySelector('#editPlayerBirthdate');
     const isidadeValida = validarIdade(birthdateInput);
 
     if (isidadeValida) {
@@ -221,7 +219,7 @@ const editarJogador = () => {
 
 // Função para mostrar os dados dos jogadores na tabela
 const mostrarDados = () => {
-  const jogadoresTable = document.querySelector('#playersTable');
+  const jogadoresTable = document.querySelector('#playersTableBody');
   jogadoresTable.innerHTML = '';
 
   let jogadores = localStorage.getItem('jogadores');
@@ -247,6 +245,7 @@ const mostrarDados = () => {
   }
 };
 
+
 // Função para calcular a idade com base na data de nascimento
 const calcularIdade = (birthdate) => {
   const hoje = new Date();
@@ -271,7 +270,7 @@ const apagarJogador = () => {
   removeForm.addEventListener('submit', (event) => {
     event.preventDefault();
 
-    const deleteId = document.querySelector('#deleteId').value;
+    const deleteId = document.querySelector('#deletePlayerId').value;
 
     let jogadores = localStorage.getItem('jogadores');
 
