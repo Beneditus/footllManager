@@ -18,15 +18,15 @@
             <div class="line3"></div>
           </div>
           <ul class="navList">
-            <li><a href="#" class="options">Jogadores</a></li>
-            <li><a href="#" class="options">Equipas</a></li>
-            <li><a href="#" class="options">Competições</a></li>
+            <li><a href="#" class="options navItem" id="linkPlayers">Jogadores</a></li>
+            <li><a href="#" class="options navItem" id="linkTeams">Equipas</a></li>
+            <li><a href="#" class="options navItem" id="linkCampeonatos">Competições</a></li>
           </ul>
         </nav>
     </header>
 
   
-    <section id="sectionPlayers">
+    <section id="sectionPlayers" class="section">
 
     <div class="containerButtons" id="containerButtonsPlayers">
       <button class="addButtons buttonPlayer" id="addPlayer">Adicionar Jogador</button>
@@ -36,7 +36,7 @@
     
 
     <div id="formContainerPlayers" class="formContainer">
-      <form id="addFormCampeonato" method="get" class="formsPlayers form">
+      <form id="addPlayerForm" method="get" class="formsPlayers form">
          
           <label for="playerName">Nome:</label>
           <input type="text" id="playerName" name="playerName" required placeholder="nome próprio e apelido">
@@ -69,13 +69,16 @@
             <option value="DF">Defesa</option>
             <option value="MC">Médio</option>
             <option value="AV">Avançado</option>
-          </select>      
+          </select>
+          
+          <label for="playerTeam">Equipa:</label>
+          <input type="number" id="playerTeam" name="playerTeam" placeholder="ID da Equipa do Jogador">
 
           <input type="submit" value="Adicionar Jogador(a)!"> 
         </form>
 
 
-        <form id="editForm" method="get" class="formsPlayers form">
+        <form id="editPlayerForm" method="get" class="formsPlayers form">
  
           
           <label for="editPlayerId">ID:</label>
@@ -118,7 +121,7 @@
         </form>
 
 
-        <form id="removeForm" method="get" class="formsPlayers form">
+        <form id="removePlayerForm" method="get" class="formsPlayers form">
           <label for="deletePlayerId">ID do jogador:</label>
           <input type="number" id="deletePlayerId" name="deletePlayerId">
           <input type="submit" value="Excluir">
@@ -137,6 +140,7 @@
            <th>País</th>
            <th>Altura</th>
            <th>Posição</th>
+           <th>Equipa</th>
          </tr>
        </thead>
        <tbody id="playersTableBody"></tbody>
@@ -145,7 +149,7 @@
   </section>
 
     <!-- EQUIPAS -->
-    <section id="sectionTeams">
+    <section id="sectionTeams" class="section">
       
     <div class="containerButtons" id="containerButtonsTeams">
       <button class="addButtons buttonTeams" id="addTeam">Adicionar Equipa</button>
@@ -157,13 +161,13 @@
       <form id="addTeamForm" method="get" class="formsTeams form">
          
           <label for="name">Nome:</label>
-          <input type="text" id="name" name="name" required placeholder="nome próprio e apelido">
+          <input type="text" id="addTeamName" name="name" required placeholder="nome próprio e apelido">
 
           <label for="acronimo">Acrónimo:</label>
-          <input type="text" id="acronimo" name="acronimo" required placeholder="Acrónimo" pattern="[A-Za-z]{3}">
+          <input type="text" id="addTeamAcronimo" name="acronimo" required placeholder="Acrónimo" pattern="[A-Za-z]{3}">
 
           <label for="country">País:</label>
-          <select id="country" name="country" required>
+          <select id="addTeamCountry" name="country" required>
             <option value="" selected disabled hidden>Select an option</option>
             <option value="Portugal">Portugal</option>
             <option value="Espanha">Espanha</option>
@@ -178,7 +182,7 @@
           </select>      
           
           <label for="descricao">Descrição:</label>
-          <input type="text" id="descricao" name="descricao" required placeholder="Acrónimo">
+          <input type="text" id="addTeamDescricao" name="descricao" required placeholder="Acrónimo">
 
           <!--
           <label for="playerIds">IDs dos jogadores a serem adicionados:</label>
@@ -238,6 +242,7 @@
              <th>Nome</th>
              <th>Acrónimo</th>
              <th>País</th>
+             <th>Descrição</th>
              <th>Jogadores</th>
            </tr>
          </thead>
@@ -247,7 +252,7 @@
 
     </section>
 
-    <section id="sectionCampeonatos">
+    <section id="sectionCampeonatos" class="section">
       <div class="leftSection">
         <select name="" id="" class="paisFiltro">
             <option value="Portugal">Portugal</option>
@@ -280,7 +285,7 @@
         </div>
 
       <div id="formContainerCampeonatos" class="formContainer">
-      <form id="addFormCampeonato" method="get" class="formsCampeonato form">
+      <form id="addCampeonatoForm" method="get" class="formsCampeonatos form">
           <label for="name">Nome:</label>
           <input type="text" id="name" name="name" required placeholder="nome do campeonato">
 
@@ -289,7 +294,7 @@
    
           <input type="submit" value="Adicionar Campeonato(a)!"> 
       </form>
-      <form id="verFormCampeonato" method="get" class="formsCampeonato form">
+      <form id="verCampeonatoForm" method="get" class="formsCampeonatos form">
           <label for="name">ID:</label>
           <input type="text" id="name" name="name" required placeholder="ID do campeonato">
 

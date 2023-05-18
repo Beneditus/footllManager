@@ -34,86 +34,90 @@ class MobileNavbar {
 const mobileNavbar = new MobileNavbar(".mobileMenu", ".navList", ".navList li");
 mobileNavbar.init();
 
+//#region Form Functions
 
+const openForm = (buttonsClass, formsClass, containerID, selectedFormID, selectedButtonID) => {
+  var buttons = document.querySelectorAll(buttonsClass)
+  var forms = document.querySelectorAll(formsClass)
+  var container = document.querySelector(containerID)
+  var selectedForm = document.querySelector(selectedFormID);
+  var selectedButton = document.querySelector(selectedButtonID);
 
-// formulario
-const allButtonsPlayers = document.querySelectorAll('.buttonPlayer');
-const formsPlayers = document.querySelectorAll('.formsPlayers');
-const containerPlayers = document.querySelector('#formContainerPlayers');
+  container.style.display = "flex";
 
-const openFormPlayers = (selectedButton) =>{
-  containerPlayers.style.display = "flex";
-  let selectedForm = document.querySelector(`#${selectedButton.id.replace("Player", "")}Form`);
-  formsPlayers.forEach(form =>{
-    form.style.display = "none";
-  });
-  allButtonsPlayers.forEach(button =>{
-    button.style.display = "none";
-  });
-  selectedButton.style.display = "block";
-  selectedForm.style.display = "flex";
-  selectedButton.addEventListener("click", () => closeFormPlayers(selectedButton));
+  forms.forEach(form => form.style.display = "none")
+
+  buttons.forEach(button => button.style.display = "none")
+
+  console.log(selectedButton)
+  selectedForm.style.display = "flex"
+  selectedButton.style.display = "block"
+
+  selectedButton.onclick = () => closeForm(buttonsClass, formsClass, containerID, selectedFormID, selectedButtonID);
 }
 
-const closeFormPlayers = (selectedButton) =>{
-  containerPlayers.style.display = "none";
-  allButtonsPlayers.forEach(button =>{
-    button.style.display = "block";
-  });
-  selectedButton.addEventListener("click", () => openFormPlayers(selectedButton));
+const closeForm = (buttonsClass, formsClass, containerID, selectedFormID, selectedButtonID) => {
+  var buttons = document.querySelectorAll(buttonsClass)
+  var container = document.querySelector(containerID)
+  var selectedButton = document.querySelector(selectedButtonID)
+  var forms = document.querySelectorAll(formsClass)
+
+  console.log(buttons)
+  container.style.display = "none";
+
+  forms.forEach(form => form.style.display = "none")
+
+  buttons.forEach(button => button.style.display = "block")
+
+  selectedButton.onclick = () => openForm(buttonsClass, formsClass, containerID, selectedFormID, selectedButtonID);
 }
 
-allButtonsPlayers.forEach(btn =>{
-  btn.addEventListener("click", () => openFormPlayers(btn))
-}); 
 
-//fim formulario
 
-//Mostra as sections
-const toggleSections = () => {
-  const sectionTeams = document.querySelector('#sectionTeams');
-  const sectionPlayers = document.querySelector('#sectionPlayers');
-  const sectionCampeonatos = document.querySelector("#sectionCampeonatos")
-  const linkJogadores = document.querySelector('.navList li:first-child a');
-  const linkEquipas = document.querySelector('.navList li:nth-child(2) a');
-  const linkCampeonatos = document.querySelector('.navList li:nth-child(3) a');
+const allButtonsPlayers = document.querySelectorAll(".buttonPlayer");
+const allButtonsTeams = document.querySelectorAll(".buttonTeams");
+const allButtonsCampeonatos = document.querySelectorAll(".buttonCampeonato")
 
-  linkJogadores.addEventListener('click', () => {
-    sectionTeams.style.display = 'none';
-    sectionCampeonatos.style.display = 'none';
-    sectionPlayers.style.display = 'flex';
-  });
+allButtonsPlayers.forEach(button => {
+  button.onclick = () => openForm(".buttonPlayer", ".formsPlayers", "#formContainerPlayers", "#" + button.id + "Form", "#" + button.id)
+})
 
-  linkEquipas.addEventListener('click', () => {
-    sectionPlayers.style.display = 'none';
-    sectionCampeonatos.style.display = 'none';
-    sectionTeams.style.display = 'flex';
-  });
+allButtonsTeams.forEach(button => {
+  button.onclick = () => openForm(".buttonTeams", ".formsTeams", "#formContainerTeams", "#" + button.id + "Form", "#" + button.id)
+})
 
-  linkCampeonatos.addEventListener('click', () => {
-    sectionPlayers.style.display = 'none';
-    sectionTeams.style.display = 'none';
-    sectionCampeonatos.style.display = 'flex';
-  });
+allButtonsCampeonatos.forEach(button => {
+  button.onclick = () => openForm(".buttonCampeonatos", ".formsCampeonatos", "#formContainerCampeonatos", "#" + button.id + "Form", "#" + button.id)
+})
+//#endregion
+
+//#region Navbar links
+const links = document.querySelectorAll('.navItem');
+links.forEach(link => link.onclick = () => toggleSections("#" + link.id.replace("link","section")))
+
+const toggleSections = (sectionID) => {
+  const allSections = document.querySelectorAll(".section")
+  const selectedSection = document.querySelector(sectionID)
+  allSections.forEach(section => section.style.display = "none")
+  selectedSection.style.display = "flex"
 };
 
-toggleSections();
+//#endregion
 
-
-
-//Funções para os Jogadores
 // Função para criar um ID único para cada jogador
-const criarID = () => {
-  const jogadores = localStorage.getItem('jogadores');
-  if (jogadores) {
-    const jogadoresArray = JSON.parse(jogadores);
-    const maxId = jogadoresArray.reduce((max, jogador) => {
-      return jogador.id > max ? jogador.id : max;
-    }, 0);
-    return maxId + 1;
+const criarID = (values) => {
+  const valuesString = localStorage.getItem(values);
+  if (valuesString) {
+    const valuesArray = JSON.parse(valuesString);
+    var id = 1
+    do{
+      if(valuesArray.every(obj => obj.id != id)) return id;
+      else id++
+    }while(true)
   }
   return 1;
 };
+
 // Função para guardar informações do jogador em localStorage
 const validarIdade = (birthdateInput) => {
   const today = new Date();
@@ -131,53 +135,89 @@ const validarIdade = (birthdateInput) => {
   }
 };
 
-const guardarInformacoes = () => {
-  const form = document.querySelector('#addForm');
+//#region Forms Players
+const formAdicionarPlayer = document.querySelector('#addPlayerForm');
 
-  form.addEventListener('submit', (event) => {
-    event.preventDefault();
+//Adicionar jogador
+formAdicionarPlayer.addEventListener('submit', (event) => {
+  event.preventDefault();
 
-    const name = document.querySelector('#playerName').value;
-    const birthdate = document.querySelector('#playerBirthdate').value;
-    const country = document.querySelector('#playerCountry').value;
-    const height = document.querySelector('#playerHeight').value;
-    const position = document.querySelector('#playerPosition').value;
+  const birthdateInput = document.querySelector('#playerBirthdate');
+  const isidadeValida = validarIdade(birthdateInput);
 
-    const birthdateInput = document.querySelector('#playerBirthdate');
-    const isidadeValida = validarIdade(birthdateInput);
+  const idEquipa = document.querySelector("#playerTeam").value;
 
-    if (isidadeValida) {
-      const jogador = {
-        id: criarID(),
-        name,
-        birthdate,
-        country,
-        height,
-        position
-      };
+  var newTeam;
+  var newTeamIndex;
+  if(idEquipa){
+    var allTeams = localStorage.getItem("equipas")
 
-      let jogadores = localStorage.getItem('jogadores');
+    if(allTeams){
+      allTeams = JSON.parse(allTeams)
 
-      if (jogadores) {
-        jogadores = JSON.parse(jogadores);
-      } else {
-        jogadores = [];
+      if(allTeams.every(team => team.id != idEquipa))
+      {
+        alert('Equipa não existe!');
+        return;
+      }
+      else{
+        newTeam = allTeams.find(team => team.id == idEquipa)
+
+        if(newTeam.players?.length >= 11){ 
+          alert('Equipa está cheia!');
+          return;
+        }
+        newTeamIndex = allTeams.indexOf(newTeam);
+      }
+    }
+    else{
+      alert('Equipa não existe!');
+      return;
+    }
+  } 
+  if (isidadeValida) {
+    const jogador = {
+      id: criarID("jogadores"),
+      name: document.querySelector('#playerName').value,
+      birthdate: document.querySelector('#playerBirthdate').value,
+      country: document.querySelector('#playerCountry').value,
+      height: document.querySelector('#playerHeight').value,
+      position: document.querySelector('#playerPosition').value,
+      team: newTeam?.name || "Sem Equipa"
+    };
+  
+    let jogadores = localStorage.getItem('jogadores');
+
+    if (jogadores) {
+      jogadores = JSON.parse(jogadores);
+    } else {
+      jogadores = [];
+    }
+
+    jogadores.push(jogador);
+
+    if(idEquipa){
+      if(newTeam.players)
+        newTeam.players.push(jogador)
+      else{
+        newTeam.players = []
+        newTeam.players.push(jogador)
       }
 
-      jogadores.push(jogador);
-
-      localStorage.setItem('jogadores', JSON.stringify(jogadores));
-
-      mostrarDados();
-      alert('Jogador adicionado com sucesso!');
+      allTeams[newTeamIndex] = newTeam;
+      localStorage.setItem("equipas", JSON.stringify(allTeams))
+      mostrarDadosEquipas();
     }
-  });
-};
-
+    
+    localStorage.setItem('jogadores', JSON.stringify(jogadores));
+    mostrarDadosPlayers();
+    alert('Jogador adicionado com sucesso!');
+  }
+});
 
 // Função para editar os dados de um jogador pelo ID
 const editarJogador = () => {
-  const editForm = document.querySelector('#editForm');
+  const editForm = document.querySelector('#editPlayerForm');
 
   editForm.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -209,7 +249,7 @@ const editarJogador = () => {
 
           localStorage.setItem('jogadores', JSON.stringify(jogadores));
 
-          mostrarDados();
+          mostrarDadosPlayers();
           alert('Jogador atualizado com sucesso!');
         }
       }
@@ -218,7 +258,7 @@ const editarJogador = () => {
 };
 
 // Função para mostrar os dados dos jogadores na tabela
-const mostrarDados = () => {
+const mostrarDadosPlayers = () => {
   const jogadoresTable = document.querySelector('#playersTableBody');
   jogadoresTable.innerHTML = '';
 
@@ -227,8 +267,19 @@ const mostrarDados = () => {
   if (jogadores) {
     jogadores = JSON.parse(jogadores);
 
+    jogadores.sort((jogadorA, jogadorB) => {
+      if (jogadorA.id < jogadorB.id)
+        return -1;
+
+      if (jogadorA.id > jogadorB.id)
+        return 1;
+
+      return 0;
+    })
+
     jogadores.forEach((jogador) => {
-      const { id, name, birthdate, country, height, position } = jogador;
+      const { id, name, birthdate, country, height, position, team } = jogador;
+
 
       const row = document.createElement('tr');
       row.innerHTML = `
@@ -238,6 +289,7 @@ const mostrarDados = () => {
         <td>${country}</td>
         <td>${height}</td>
         <td>${position}</td>
+        <td>${team}</td>
       `;
 
       jogadoresTable.appendChild(row);
@@ -245,6 +297,46 @@ const mostrarDados = () => {
   }
 };
 
+const removeForm = document.querySelector('#removePlayerForm');
+
+removeForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+
+  const deleteId = document.querySelector('#deletePlayerId').value;
+
+  let jogadores = localStorage.getItem('jogadores');
+
+  if (jogadores) {
+    jogadores = JSON.parse(jogadores);
+
+    const index = jogadores.findIndex((jogador) => jogador.id == deleteId);
+    var jogador = jogadores[index]
+    if (index !== -1) {
+      if(jogador.team != "Sem Equipa"){
+        var allTeams = JSON.parse(localStorage.getItem("equipas"))
+        var playerTeam = allTeams.find(team => team.name == jogador.team)
+        var playerTeamIndex = allTeams.indexOf(playerTeam)
+        playerTeam.players.splice(playerTeam.players.findIndex(player => player.id == deleteId), 1)
+
+        allTeams[playerTeamIndex] = playerTeam;
+
+        localStorage.setItem('equipas', JSON.stringify(allTeams));
+      }
+
+      jogadores.splice(index, 1);
+      localStorage.setItem('jogadores', JSON.stringify(jogadores));
+      mostrarDadosPlayers();
+      mostrarDadosEquipas();
+      alert('Jogador removido com sucesso!');
+    } else {
+      alert('Jogador não encontrado!');
+    }
+  } else {
+    alert('Jogador não encontrado!');
+  }
+});
+
+//#endregion
 
 // Função para calcular a idade com base na data de nascimento
 const calcularIdade = (birthdate) => {
@@ -263,122 +355,101 @@ const calcularIdade = (birthdate) => {
   return idade;
 };
 
-// Função para remover um jogador pelo ID
-const apagarJogador = () => {
-  const removeForm = document.querySelector('#removeForm');
-
-  removeForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-
-    const deleteId = document.querySelector('#deletePlayerId').value;
-
-    let jogadores = localStorage.getItem('jogadores');
-
-    if (jogadores) {
-      jogadores = JSON.parse(jogadores);
-
-      const index = jogadores.findIndex((jogador) => jogador.id.toString() === deleteId);
-
-      if (index !== -1) {
-        jogadores.splice(index, 1);
-        localStorage.setItem('jogadores', JSON.stringify(jogadores));
-        mostrarDados();
-        alert('Jogador removido com sucesso!');
-      } else {
-        alert('Jogador não encontrado!');
-      }
-    } else {
-      alert('Jogador não encontrado!');
-    }
-  });
-};
-
-
-//ativar funções
-const ativarFuncoes = () => {
-  guardarInformacoes();
-  mostrarDados();
-  editarJogador();
-  apagarJogador();
-};
-
-ativarFuncoes();
-
-
-//Fim Jogadores
-
+mostrarDadosPlayers();
 
 //Scripts Equipas
 
-// formulario
-const allButtonsTeams = document.querySelectorAll('.buttonTeams');
-const formsTeams = document.querySelectorAll('.formsTeams');
-const containerTeams = document.querySelector('#formContainerTeams');
+// Função para mostrar os dados dos jogadores na tabela
+const mostrarDadosEquipas = () => {
+  const equipasTable = document.querySelector('#teamTableBody');
+  equipasTable.innerHTML = '';
 
-const openFormTeams = (selectedButton) =>{
-  containerTeams.style.display = "flex";
-  let selectedForm = document.querySelector(`#${selectedButton.id.replace("Team", "")}TeamForm`);
-  console.log(selectedForm)
-  formsTeams.forEach(form =>{
-    form.style.display = "none";
-  });
-  allButtonsTeams.forEach(button =>{
-    button.style.display = "none";
-  });
-  selectedButton.style.display = "block";
-  selectedForm.style.display = "flex";
-  selectedButton.addEventListener("click", () => closeFormTeams(selectedButton));
+  let equipas = localStorage.getItem('equipas');
+
+  if (equipas) {
+    equipas = JSON.parse(equipas);
+
+    equipas.sort((equipaA, equipaB) => {
+      if (equipaA.id < equipaB.id)
+        return -1;
+
+      if (equipaA.id > equipaB.id)
+        return 1;
+
+      return 0;
+    })
+
+    equipas.forEach((equipa) => {
+      const { id, name, acronimo, country, descricao, players } = equipa;
+
+      var playerNames = "";
+
+      if(!players || players?.length < 1) playerNames = "Sem Jogadores"
+      else {
+        players.forEach(player => playerNames += player.name + "; ")
+      }
+    
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${id}</td>
+        <td>${name}</td>
+        <td>${acronimo}</td>
+        <td>${country}</td>
+        <td>${descricao}</td>
+        <td>${playerNames}</td>
+      `;
+
+      equipasTable.appendChild(row);
+    });
+  }
+};
+
+mostrarDadosEquipas();
+
+const formAdicionarEquipa = document.querySelector('#addTeamForm');
+
+const verificarJogadoresLivres = () => {
+  let jogadores = localStorage.getItem('equipas');
+
+  if(jogadores) jogadores = JSON.parse(jogadores)
+  else return false;
+
+  if(jogadores.length < 11) return false;
+
+
 }
+//Adicionar equipa
+formAdicionarEquipa.addEventListener('submit', (event) => {
+  event.preventDefault();
 
-const closeFormTeams = (selectedButton) =>{
-  containerTeams.style.display = "none";
-  allButtonsTeams.forEach(button =>{
-    button.style.display = "block";
-  });
-  selectedButton.addEventListener("click", () => openFormTeams(selectedButton));
-}
 
-allButtonsTeams.forEach(btn =>{
-  btn.addEventListener("click", () => openFormTeams(btn))
-}); 
+    const equipa = {
+      id: criarID("equipas"),
+      name: document.querySelector('#addTeamName').value,
+      acronimo: document.querySelector('#addTeamAcronimo').value,
+      country: document.querySelector('#addTeamCountry').value,
+      descricao: document.querySelector('#addTeamDescricao').value,
+    };
 
-//fim formulario
+    console.log(equipa)
+    let equipas = localStorage.getItem('equipas');
 
-//Fim Equipas
+    if (equipas) {
+      equipas = JSON.parse(equipas);
+    } else {
+      equipas = [];
+    }
 
-//Scripts Campeonatos
-const allButtonsCampeonatos = document.querySelectorAll('.buttonCampeonato');
-const formsCampeonatos = document.querySelectorAll('.formsCampeonato');
-const containerCampeonatos = document.querySelector('#formContainerCampeonatos');
+    equipas.push(equipa);
 
-const openFormCampeonatos = (selectedButton) =>{
-  containerCampeonatos.style.display = "flex";
-  let selectedForm = document.querySelector(`#${selectedButton.id.replace("Campeonato", "")}FormCampeonato`);
-  formsCampeonatos.forEach(form =>{
-    form.style.display = "none";
-  });
-  allButtonsCampeonatos.forEach(button =>{
-    button.style.display = "none";
-  });
-  selectedButton.style.display = "block";
-  selectedForm.style.display = "flex";
-  selectedButton.addEventListener("click", () => closeFormCampeonatos(selectedButton));
-}
+    localStorage.setItem('equipas', JSON.stringify(equipas));
 
-const closeFormCampeonatos = (selectedButton) =>{
-  containerCampeonatos.style.display = "none";
-  allButtonsCampeonatos.forEach(button =>{
-    button.style.display = "block";
-  });
-  selectedButton.addEventListener("click", () => openFormCampeonatos(selectedButton));
-}
-
-allButtonsCampeonatos.forEach(btn =>{
-  btn.addEventListener("click", () => openFormCampeonatos(btn))
+    mostrarDadosEquipas();
+    alert('Equipa adicionado com sucesso!');
 });
 
 const guardarInformacoesCampeonato = () => {
-  const form = document.querySelector('#addFormCampeonato');
+  const form = document.querySelector('#addCampeonatoForm');
 
   form.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -411,7 +482,7 @@ const guardarInformacoesCampeonato = () => {
 
       localStorage.setItem('jogadores', JSON.stringify(jogadores));
 
-      mostrarDados();
+      mostrarDadosPlayers();
       alert('Jogador adicionado com sucesso!');
     }
   });

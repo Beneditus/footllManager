@@ -11,6 +11,10 @@
   }
   
 
+#sectionCampeonatos{
+  display: flex;
+}
+
   /* navigationBar Responsiva*/
   .options, .logo{
     color: #fff;
@@ -266,10 +270,8 @@ th {
 }
 
 #sectionCampeonatos{
-  display: flex;
   flex-direction: row;
 }
-
 .leftSection{
   width: 40%;
   height: 100%;
