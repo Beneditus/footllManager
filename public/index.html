@@ -38,14 +38,14 @@
     <div id="formContainerPlayers" class="formContainer">
       <form id="addForm" method="get" class="formsPlayers form">
          
-          <label for="name">Nome:</label>
-          <input type="text" id="name" name="name" required placeholder="nome próprio e apelido">
+          <label for="playerName">Nome:</label>
+          <input type="text" id="playerName" name="playerName" required placeholder="nome próprio e apelido">
 
-          <label for="birthdate">Data de Nascimento:</label>
-          <input type="date" id="birthdate" name="birthdate" required>
+          <label for="playerBirthdate">Data de Nascimento:</label>
+          <input type="date" id="playerBirthdate" name="playerBirthdate" required>
 
-          <label for="country">País:</label>
-          <select id="country" name="country" required>
+          <label for="playerCountry">País:</label>
+          <select id="playerCountry" name="playerCountry" required>
             <option value="" selected disabled hidden>Select an option</option>
             <option value="Portugal">Portugal</option>
             <option value="Espanha">Espanha</option>
@@ -59,11 +59,11 @@
             <option value="Inglaterra">Inglaterra</option>
           </select>      
 
-          <label for="height">Altura:</label>
-          <input type="number" id="height" name="height" required placeholder="altura do jogador" min="150" max="220">
+          <label for="playerHeight">Altura:</label>
+          <input type="number" id="playerHeight" name="playerHeight" required placeholder="altura do jogador" min="150" max="220">
 
-          <label for="position">Posição:</label>
-          <select id="position" name="position" required>
+          <label for="playerPosition">Posição:</label>
+          <select id="playerPosition" name="playerPosition" required>
             <option value="" selected disabled hidden>Select an option</option>
             <option value="GR">Guarda-Redes</option>
             <option value="DF">Defesa</option>
@@ -78,17 +78,17 @@
         <form id="editForm" method="get" class="formsPlayers form">
  
           
-          <label for="editId">ID:</label>
-          <input type="text" id="editId" name="id">
+          <label for="editPlayerId">ID:</label>
+          <input type="text" id="editPlayerId" name="editPlayerId">
           
-          <label for="editName">Nome:</label>
-          <input type="text" id="editName" name="name" required placeholder="nome próprio e apelido">
+          <label for="editPlayerName">Nome:</label>
+          <input type="text" id="editPlayerName" name="editPlayerName" required placeholder="nome próprio e apelido">
           
-          <label for="editBirthdate">Data de Nascimento:</label>
-          <input type="date" id="editBirthdate" name="birthdate" required>
+          <label for="editPlayerBirthdate">Data de Nascimento:</label>
+          <input type="date" id="editPlayerBirthdate" name="editPlayerBirthdate" required>
           
-          <label for="editCountry">País:</label>
-          <select id="editCountry" name="editCountry" required>
+          <label for="editPlayerCountry">País:</label>
+          <select id="editPlayerCountry" name="editPlayerCountry" required>
             <option value="" selected disabled hidden>Select an option</option>
             <option value="Portugal">Portugal</option>
             <option value="Espanha">Espanha</option>
@@ -102,11 +102,11 @@
             <option value="Inglaterra">Inglaterra</option>
           </select>    
           
-          <label for="editHeight">Altura:</label>
-          <input type="number" id="editHeight" name="height" required placeholder="altura do jogador" min="150" max="220">
+          <label for="editPlayerHeight">Altura:</label>
+          <input type="number" id="editPlayerHeight" name="editPlayerHeight" required placeholder="altura do jogador" min="150" max="220">
           
-          <label for="editPosition">Posição:</label>
-          <select id="editPosition" name="position" required>
+          <label for="editPlayerPosition">Posição:</label>
+          <select id="editPlayerPosition" name="editPlayerPosition" required>
             <option value="" selected disabled hidden>Selecionar opção</option>
             <option value="GR">Guarda-Redes</option>
             <option value="DF">Defesa</option>
@@ -119,8 +119,8 @@
 
 
         <form id="removeForm" method="get" class="formsPlayers form">
-          <label for="deleteId">ID do jogador:</label>
-          <input type="number" id="deleteId" name="id">
+          <label for="deletePlayerId">ID do jogador:</label>
+          <input type="number" id="deletePlayerId" name="deletePlayerId">
           <input type="submit" value="Excluir">
         </form>
         
@@ -128,7 +128,7 @@
 
     <div class="tableContainer">
     
-    <table id="dataTable">
+    <table id="playersTable">
       <thead>
          <tr>
            <th>ID</th>
@@ -139,7 +139,7 @@
            <th>Posição</th>
          </tr>
        </thead>
-       <tbody id="playersTable"></tbody>
+       <tbody id="playersTableBody"></tbody>
       </table>
     </div>
   </section>
@@ -180,8 +180,10 @@
           <label for="descricao">Descrição:</label>
           <input type="text" id="descricao" name="descricao" required placeholder="Acrónimo">
 
+          <!--
           <label for="playerIds">IDs dos jogadores a serem adicionados:</label>
           <input type="text" id="playerIds" name="playerIds" required placeholder="IDs dos jogadores (separar por vírgula)">
+          -->
 
           <input type="submit" value="Adicionar Equipa!"> 
         </form>
@@ -189,17 +191,17 @@
 
         <form id="editTeamForm" method="get" class="formsTeams form">
 	
-          <label for="editId">ID:</label>
-                <input type="text" id="editId" name="id">         
+          <label for="editTeamId">ID:</label>
+                <input type="text" id="editTeamId" name="id">         
       
-                <label for="editName">Nome:</label>
-                <input type="text" id="editName" name="editName" required placeholder="nome da equipa">
+                <label for="editTeamName">Nome:</label>
+                <input type="text" id="editTeamName" name="editName" required placeholder="nome da equipa">
       
-                <label for="editAcronimo">Acrónimo:</label>
-                <input type="text" id="editAcronimo" name="editAcronimo" required placeholder="Acrónimo" pattern="[A-Za-z]{3}">
+                <label for="editTeamAcronimo">Acrónimo:</label>
+                <input type="text" id="editTeamAcronimo" name="editTeamAcronimo" required placeholder="Acrónimo" pattern="[A-Za-z]{3}">
       
-                <label for="editCountry">País:</label>
-                <select id="editCountry" name="editCountry" required>
+                <label for="editTeamCountry">País:</label>
+                <select id="editTeamCountry" name="editTeamCountry" required>
                   <option value="" selected disabled hidden>Select an option</option>
                   <option value="Portugal">Portugal</option>
                   <option value="Espanha">Espanha</option>
@@ -213,16 +215,16 @@
                   <option value="Inglaterra">Inglaterra</option>
                 </select>      
                 
-                <label for="editDescricao">Descrição:</label>
-                <input type="text" id="editDescricao" name="editDescricao" required placeholder="descrição">
+                <label for="editTeamDescricao">Descrição:</label>
+                <input type="text" id="editTeamDescricao" name="editTeamDescricao" required placeholder="descrição">
       
                 <input type="submit" value="Editar Equipa!"> 
          </form>
       
 
        <form id="removeTeamForm" method="get" class="formsTeams form">
-          <label for="deleteId">ID da Equipa:</label>
-          <input type="number" id="deleteId" name="id">
+          <label for="deleteTeamId">ID da Equipa:</label>
+          <input type="number" id="deleteTeamId" name="id">
           <input type="submit" value="Excluir">
         </form>
     </div>
@@ -239,7 +241,7 @@
              <th>Jogadores</th>
            </tr>
          </thead>
-         <tbody id="teamTable"></tbody>
+         <tbody id="teamTableBody"></tbody>
         </table>
     </div>
 
