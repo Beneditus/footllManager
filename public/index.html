@@ -117,6 +117,9 @@
             <option value="AV">Avançado</option>
           </select>
           
+          <label for="editPlayerTeam">Equipa:</label>
+          <input type="number" id="editPlayerTeam" name="editPlayerTeam" placeholder="ID da Equipa do Jogador">
+
           <input type="submit" value="Editar Jogador(a)!">
         </form>
 
@@ -166,6 +169,9 @@
           <label for="acronimo">Acrónimo:</label>
           <input type="text" id="addTeamAcronimo" name="acronimo" required placeholder="Acrónimo" pattern="[A-Za-z]{3}">
 
+          <label for="addTeamURL">URL:</label>
+          <input type="text" id="addTeamURL" name="addTeamURL" required placeholder="Site da Equipa">
+
           <label for="country">País:</label>
           <select id="addTeamCountry" name="country" required>
             <option value="" selected disabled hidden>Select an option</option>
@@ -184,10 +190,9 @@
           <label for="descricao">Descrição:</label>
           <input type="text" id="addTeamDescricao" name="descricao" required placeholder="Acrónimo">
 
-          <!--
-          <label for="playerIds">IDs dos jogadores a serem adicionados:</label>
-          <input type="text" id="playerIds" name="playerIds" required placeholder="IDs dos jogadores (separar por vírgula)">
-          -->
+          <label for="addTeamPlayers">IDs dos jogadores a serem adicionados:</label>
+          <input type="text" id="addTeamPlayers" name="addTeamPlayers" placeholder="IDs dos jogadores (separar por vírgula)">
+          
 
           <input type="submit" value="Adicionar Equipa!"> 
         </form>
@@ -204,6 +209,9 @@
                 <label for="editTeamAcronimo">Acrónimo:</label>
                 <input type="text" id="editTeamAcronimo" name="editTeamAcronimo" required placeholder="Acrónimo" pattern="[A-Za-z]{3}">
       
+                <label for="editTeamURL">URL:</label>
+                <input type="text" id="editTeamURL" name="editTeamURL" required placeholder="Site da Equipa">
+
                 <label for="editTeamCountry">País:</label>
                 <select id="editTeamCountry" name="editTeamCountry" required>
                   <option value="" selected disabled hidden>Select an option</option>
@@ -241,6 +249,7 @@
              <th>ID</th>
              <th>Nome</th>
              <th>Acrónimo</th>
+             <th>URL</th>
              <th>País</th>
              <th>Descrição</th>
              <th>Jogadores</th>
@@ -253,8 +262,10 @@
     </section>
 
     <section id="sectionCampeonatos" class="section">
+      <div class="upperSection">
       <div class="leftSection">
-        <select name="" id="" class="paisFiltro">
+        <select name="" id="paisFiltro" class="paisFiltro">
+            <option value="todos">Todos</option>
             <option value="Portugal">Portugal</option>
             <option value="Espanha">Espanha</option>
             <option value="França">França</option>
@@ -266,16 +277,18 @@
             <option value="Holanda">Holanda</option>
             <option value="Inglaterra">Inglaterra</option>
         </select>
-        
+      
+      <div class="tableContainer">
       <table id="dataTableCampeonatosEquipas">
           <thead>
          <tr>
-           <th>País</th>
-           <th>Equipa</th>
+           <th style="width:100px">ID</th>
+           <th style="width:400px">Equipa</th>
          </tr>
        </thead>
        <tbody id="campeonatosEquipasTable"></tbody>
       </table>
+      </div>
       </div>
 
       <div class="rightSection">
@@ -286,37 +299,85 @@
 
       <div id="formContainerCampeonatos" class="formContainer">
       <form id="addCampeonatoForm" method="get" class="formsCampeonatos form">
-          <label for="name">Nome:</label>
-          <input type="text" id="name" name="name" required placeholder="nome do campeonato">
+          <label for="addCampeonatoName">Nome:</label>
+          <input type="text" id="addCampeonatoName" name="addCampeonatoName" required placeholder="nome do campeonato">
 
-          <label for="birthdate">Edição:</label>
-          <input type="number" id="edition" name="edition" required>
+          <label for="addCampeonatoEdition">Edição:</label>
+          <input type="number" id="addCampeonatoEdition" name="addCampeonatoEdition" required>
+
+          <label for="addCampeonatoTeams">IDs das equipas a serem adicionadas:</label>
+          <input type="text" id="addCampeonatoTeams" name="addCampeonatoTeams" required placeholder="IDs das equipas (separar por vírgula)">
    
           <input type="submit" value="Adicionar Campeonato(a)!"> 
       </form>
       <form id="verCampeonatoForm" method="get" class="formsCampeonatos form">
-          <label for="name">ID:</label>
-          <input type="text" id="name" name="name" required placeholder="ID do campeonato">
-
-          <label for="birthdate">Edição:</label>
-          <input type="number" id="edition" name="edition" required>
+          <label for="verCampeonatoID">ID:</label>
+          <input type="text" id="verCampeonatoID" name="verCampeonatoID" required placeholder="ID do campeonato">
    
           <input type="submit" value="Ver Campeonato(a)!"> 
       </form>
       </div>
+      <div class="tableContainer">
       <table id="dataTableCampeonatos">
       <thead>
          <tr>
-           <th style="width: 30%;">Nome</th>
-           <th style="width: 18%;">Edição</th>
-           <th style="width: 30%;">Vencedor</th>
-           <th style="width: 22%;">Estado</th>
+           <th style="width: 100px;">ID</th>
+           <th style="width: 365px;">Nome</th>
+           <th style="width: 100px;">Edição</th>
+           <th style="width: 465px;">Vencedor</th>
+           <th style="width: 270px;">Estado</th>
          </tr>
        </thead>
        <tbody id="campeonatosTable"></tbody>
       </table>
       </div>
+      </div>
+    </div>
+    <div id="campeonatoContainer">
+      <div class="campeonatoDetails">
+        <div class="closeButtonContainer"> <div class="closeButton"> X </div> </div>
+        <div class="matchesContainer">
+          <button class="simulateBracket">
+            SIMULAR PRÓXIMO BRACKET
+          </button>
+          <div class="bracketContainer">
+            <div>
+<p> a </p>
+            <p> a </p>
+            <p> a </p>
+            <p> a </p>
+            <p> a </p>
+            <p> a </p>
+            <p> a </p>
+            <p> a </p>
+            <p> a </p>
+            <p> a </p>
+            <p> a </p>
+            <p> a </p>
+            <p> a </p>
+            <p> a </p>
+            <p> a </p>
+            <p> a </p>
+            </div>
+            
+          </div>
+          <div class="bracketContainer" id="oitavosBracket">
+            <span class="bracketTitle"> Oitavos de Final</span>
+          </div>
+          <div class="bracketContainer" id="quartosBracket">
+            <span class="bracketTitle"> Quartos de Final</span>
+          </div>
+          <div class="bracketContainer" id="meiasBracket">
+            <span class="bracketTitle"> Meias Finais</span>
+          </div>
+          <div class="bracketContainer" id="finalBracket">
+            <span class="bracketTitle"> Final</span>
+          </div>
+        </div>
+      </div>
+    </div>
     </section>
+    
     <script src="scripts/scripts.js"></script>
 </body>
 </html>
