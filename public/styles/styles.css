@@ -406,3 +406,11 @@ table {
 .bold{
   font-weight: bold;
 }
+
+.strikethrough{
+  text-decoration: line-through
+}
+
+.tallerTable{
+  height: 85vh;
+}

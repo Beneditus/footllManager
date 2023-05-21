@@ -636,13 +636,14 @@ const addCampeonatoForm = document.querySelector('#addCampeonatoForm');
 addCampeonatoForm.addEventListener('submit', (event) => {
   event.preventDefault();
 
+
     const campeonato = {
       id: criarID("campeonatos"),
       name: document.querySelector('#addCampeonatoName').value,
       edition: document.querySelector('#addCampeonatoEdition').value,
       members: [],
       matches: [],
-      currentBracket: "Oitavos de Final",
+      lastBracket: "not started",
       winner: "---",
       estado: "Em preparação"
     };
@@ -676,7 +677,7 @@ addCampeonatoForm.addEventListener('submit', (event) => {
     }
 
     membros.forEach(membro => {
-      var novaEquipa =equipasDisponveisCampeonato.find(equipa => equipa.id == membro)
+      var novaEquipa = equipasDisponveisCampeonato.find(equipa => equipa.id == membro)
       campeonato.members.push(novaEquipa)
     })
 
@@ -713,7 +714,9 @@ verCampeonatoForm.addEventListener('submit', (event) => {
       document.querySelector(".upperSection").style.display = "none"
 
       document.querySelector(".simulateBracket").onclick = () => simularFase(allCampeonatos[campeonato])
+      
       atualizarBrackets(allCampeonatos[campeonato])
+      atualizarTabelaParticipantes(allCampeonatos[campeonato])
     }
     else {
       alert("Campeonato não existe!")
@@ -736,7 +739,6 @@ const atualizarTabelas = () =>{
 atualizarTabelas();
 
 const simularJogo = (equipa1, equipa2, bracket) => {
-  
   var golosEquipa1;
   var golosEquipa2;
   
@@ -761,8 +763,8 @@ const simularFase = (campeonato) => {
   var campeonatos = JSON.parse(localStorage.getItem("campeonatos"))
   var indexCampeonato = campeonatos.findIndex(camp => camp.id == campeonato.id);
 
-  switch(campeonato.currentBracket){
-    case "Oitavos de Final":{
+  switch(campeonato.lastBracket){
+    case "not started":{ //Simular Oitavos de Final
       availableTeams = campeonato.members
       
       for(i = 0; i < 8; i++){
@@ -777,12 +779,12 @@ const simularFase = (campeonato) => {
       }
 
       campeonatos[indexCampeonato].matches = matches;
-      campeonatos[indexCampeonato].currentBracket = "Quartos de Final"
+      campeonatos[indexCampeonato].lastBracket = "Oitavos de Final"
       campeonatos[indexCampeonato].estado = "Em Competição"
 
       break
     }
-    case "Quartos de Final":{
+    case "Oitavos de Final":{ //Simular Quartos de Final
       campeonato.matches.forEach(match =>{
         if(match.bracket == "Oitavos de Final")
         availableTeams.push(match.winner)
@@ -797,10 +799,10 @@ const simularFase = (campeonato) => {
       }
 
       campeonatos[indexCampeonato].matches = matches;
-      campeonatos[indexCampeonato].currentBracket = "Meias Finais"
+      campeonatos[indexCampeonato].lastBracket = "Quartos de Final"
       break
     }
-    case "Meias Finais":{
+    case "Quartos de Final":{ //Simular Meias de Final
       campeonato.matches.forEach(match =>{
         if(match.bracket == "Quartos de Final")
         availableTeams.push(match.winner)
@@ -814,10 +816,10 @@ const simularFase = (campeonato) => {
       }
 
       campeonatos[indexCampeonato].matches = matches;
-      campeonatos[indexCampeonato].currentBracket = "Final"
+      campeonatos[indexCampeonato].lastBracket = "Meias Finais"
       break
     }    
-    case "Final":{
+    case "Meias Finais":{ //Simular Final
       campeonato.matches.forEach(match =>{
         if(match.bracket == "Meias Finais")
         availableTeams.push(match.winner)
@@ -834,20 +836,58 @@ const simularFase = (campeonato) => {
       var indexCampeonato = campeonatos.findIndex(camp => camp.id == campeonato.id);
 
       campeonatos[indexCampeonato].matches = matches;
-      campeonatos[indexCampeonato].currentBracket = "Finished"
+      campeonatos[indexCampeonato].lastBracket = "Final"
       campeonatos[indexCampeonato].winner = finalMatch.winner
       campeonatos[indexCampeonato].estado = "Terminado"
       break
     }
-    case "Finished":
+    case "Final":
       window.alert("Campeonato já terminou!")
       break
   }
 
+  atualizarBrackets(campeonato)
+
   document.querySelector(".simulateBracket").onclick = () => simularFase(campeonatos[indexCampeonato])
 
   localStorage.setItem("campeonatos", JSON.stringify(campeonatos))
-  atualizarBrackets(campeonato)
+
+  atualizarTabelaParticipantes(campeonatos[indexCampeonato])
+}
+
+const atualizarTabelaParticipantes = (campeonato) => {
+  console.log(campeonato)
+  const participantesTable = document.querySelector('#participantesTable');
+  participantesTable.innerHTML = '';
+
+  campeonato.members.forEach((equipa) => {
+    const { name } = equipa;
+
+    const row = document.createElement('tr');
+    
+    switch(campeonato.lastBracket){
+      case "not started":
+        row.innerHTML = `
+          <td>${name}</td>
+          `
+        break;
+        
+      default:
+        if(campeonato.matches.some(match => match.bracket == campeonato.lastBracket && match.winner.name == name)){
+          row.innerHTML = `
+          <td>${name}</td>
+          `
+        }
+        else{
+          row.innerHTML = `
+          <td class="strikethrough">${name}</td>
+          `
+        }
+      break;
+    }
+    
+    participantesTable.appendChild(row);
+  });
 }
 
 const atualizarBrackets = (campeonato) => {
@@ -896,6 +936,7 @@ const atualizarBrackets = (campeonato) => {
 document.querySelector(".closeButton").addEventListener("click", () => {
   document.querySelector("#campeonatoContainer").style.display = "none"
   document.querySelector(".upperSection").style.display = "flex"
+  atualizarTabelas()
 })
 
 if(modoTeste){
